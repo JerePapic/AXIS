@@ -21,7 +21,7 @@ private:
     float phaseB = 0.0f;
     float phaseC = 0.0f;
 
-    // Base frequency (hidden constant for now)
+    // Base frequency
     float baseFreq = 55.0f;
 
     // Spectral rotation
@@ -62,3 +62,4 @@ private:
     juce::dsp::StateVariableTPTFilter<float> filterA_L, filterA_R;
     juce::dsp::StateVariableTPTFilter<float> filterB_L, filterB_R;
 };
+
