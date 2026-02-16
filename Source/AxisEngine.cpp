@@ -260,7 +260,7 @@ void AxisEngine::process (juce::AudioBuffer<float>& buffer)
         float energyA = 0.5f * (std::abs (outA_L) + std::abs (outA_R));
         float energyB = 0.5f * (std::abs (outB_L) + std::abs (outB_R));
 
-        // Smooth it (important!)
+        // Smoothing
         crossModA += 0.001f * (energyA - crossModA);
         crossModB += 0.001f * (energyB - crossModB);
 
@@ -295,19 +295,20 @@ void AxisEngine::process (juce::AudioBuffer<float>& buffer)
 
         
         // Mid grit (cheap nonlinearity) - adds texture without pitch
-        float grit = (outL * outL * outL) - outL; // odd-harmonic edge
+        float grit = (outL * outL * outL) - outL; // odd harmonics
         outL += grit * body * 0.02f;
         grit = (outR * outR * outR) - outR;
         outR += grit * body * 0.02f;
         
 
 
-        // MASS damping (1-pole lowpass)
+        // MASS damping (1 pole lowpass)
         dampL += g * (outL - dampL);
         dampR += g * (outR - dampR);
 
-        // Blend damped vs raw
+        // Blend damp/raw
         left[i]  = outL * (1.0f - dampMix) + dampL * dampMix;
         right[i] = outR * (1.0f - dampMix) + dampR * dampMix;
     }
 }
+
